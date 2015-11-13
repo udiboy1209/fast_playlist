@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <!-- <link type="text/css" rel="stylesheet" href="css/materialize.css"/>-->
+        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+
+        <script type="text/javascript" src="js/youtube.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body class="blue lighten-5">
+        <nav>
+            <div class="nav-wrapper red">
+                <span class="brand-logo center">Youtube Fast Playlist</span>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col s6">
+                    <div class="row">
+                        <div class="col s12 center"><div id="player"></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col s10 offset-s1 card white">
+                            <div class="input-field">
+                                <i onclick="searchVid($('#search').val())" class="material-icons prefix" style="cursor: pointer">search</i>
+                                <input id="search" type="search" style="padding-left: 2rem; width: calc(90% - 2.5rem)"></input>
+                                <label for="search">Search Youtube</label>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="collection" id="search_res">
+                    </ul>
+                </div>
+
+                <div class="col s5">
+                    <div class="row card white">
+                        <div class="col s3 center waves-effect btn-play-control" onclick="playPrev()">
+                            <i class="material-icons small">skip_previous</i>
+                        </div>
+                        <div class="col s3 center waves-effect btn-play-control" onclick="playNext()">
+                            <i class="material-icons small">skip_next</i>
+                        </div>
+                        <div id="repeat_all" class="col s3 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('all')">
+                            <i class="material-icons small">repeat</i>
+                        </div>
+                        <div id="repeat_one" class="col s3 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('one')">
+                            <i class="material-icons small">repeat_one</i>
+                        </div>
+                    </div>
+                    <ul class="collection" id="playlist">
+                    </ul>
+                    <!-- <div class="row card-panel blue lighten-4 valign-wrapper">
+                        <div class="col s4">
+                            <img id="img"/>
+                        </div>
+                        <div class="col s6 valign">
+                            <span class="brown-text text-darken-3">Title</span>
+                        </div>
+                        <div class="col s2 valign">
+                            <button id="action" class="btn-floating red waves-effect waves-light">
+                            <i class="material-icons">add</i>
+                            </button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script>
+            // 2. This code loads the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            $("#search").keypress(function(e){
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                if(keycode == '13'){
+                    searchVid($(this).val());
+                }
+                
+            })
+        </script>
+        <script src="https://apis.google.com/js/client.js?onload=onGoogleApiClientLoad"></script>
+    </body>
+</html>
