@@ -22,8 +22,8 @@ $(window).load(function() {
         var vidrow=getVidRow(playlist[i]);
         var id=playlist[i].id.videoId;
         $(vidrow).addClass("item-video waves-effect");
-        $(vidrow).find("#title").attr("onclick","playSong('"+id+"')");
-        $(vidrow).find("#action").attr("onclick","removeFromPlaylist('"+id+"')");
+        $(vidrow).attr("onclick","playSong('"+id+"')");
+        $(vidrow).find("#action").attr("onclick","removeFromPlaylist(event,'"+id+"')");
         $(vidrow).find("#action i").html("clear");
         vidrow.appendTo("#playlist");
 
@@ -39,6 +39,8 @@ function getVidRow(data){
     $(vidrow).find("#title").html(data.snippet.title);
     $(vidrow).find("#img").attr("src",data.snippet.thumbnails.default.url);
     $(vidrow).attr("id",data.id.videoId);
+    $(vidrow).css("opacity","0");
+    $(vidrow).animate({"opacity":"1"},{always:function(){$(this).removeAttr("style")}});
     return vidrow;
 }
 
@@ -86,8 +88,8 @@ function addToPlaylist(index){
     var id=search_res[index].id.videoId;
     var vidrow=getVidRow(search_res[index]);
     $(vidrow).addClass("waves-effect item-video");
-    $(vidrow).find("#title").attr("onclick","playSong('"+id+"')");
-    $(vidrow).find("#action").attr("onclick","removeFromPlaylist('"+id+"')");
+    $(vidrow).attr("onclick","playSong('"+id+"')");
+    $(vidrow).find("#action").attr("onclick","removeFromPlaylist(event,'"+id+"')");
     $(vidrow).find("#action i").html("clear");
     $(vidrow).appendTo("#playlist");
 
@@ -95,7 +97,7 @@ function addToPlaylist(index){
         playNext();
 }
 
-function removeFromPlaylist(id){
+function removeFromPlaylist(event,id){
     var index=0;
     for(var i=0; i<playlist.length; i++){
         if(id==playlist[i].id.videoId)
@@ -108,10 +110,20 @@ function removeFromPlaylist(id){
     savePlaylist();
     //displayPlaylist();
 
-    $("#playlist #"+id).remove();
+    $("#playlist #"+id).animate({'opacity':'0'},{duration:300,easing:'linear'});
+    $("#playlist #"+id).slideUp(
+        {duration:400,
+        start: function(){
+            $(this).attr("class","");
+        },
+        always:function(){
+            this.remove()
+        }});
 
     if(playing>index) playing--;
     else if(playing==index) playSong();
+
+    event.stopPropagation();
 }
 
 function playSong(id){
