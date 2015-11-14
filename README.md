@@ -15,3 +15,8 @@ Wishlist
 ---------
  - Drag and Drop!
  - Reordering of playlist
+
+License
+--------
+
+MIT

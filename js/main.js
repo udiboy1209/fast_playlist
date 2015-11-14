@@ -86,7 +86,7 @@ function addToPlaylist(index){
     var id=search_res[index].id.videoId;
     var vidrow=getVidRow(search_res[index]);
     $(vidrow).addClass("waves-effect item-video");
-    $(vidrow).attr("onclick","playSong('"+id+"')");
+    $(vidrow).find("#title").attr("onclick","playSong('"+id+"')");
     $(vidrow).find("#action").attr("onclick","removeFromPlaylist('"+id+"')");
     $(vidrow).find("#action i").html("clear");
     $(vidrow).appendTo("#playlist");
