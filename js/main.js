@@ -81,6 +81,17 @@ function displayPlaying(){
 }
 
 function addToPlaylist(index){
+    var j=0;
+    for(var i=0; i<playlist.length; i++){
+        if(search_res[index].id.videoId==playlist[i].id.videoId)
+            break;
+        j++;
+    }
+    if(j<playlist.length){
+        Materialize.toast('Song already exists in playlist!', 2000);
+        return;
+    }
+
     playlist.push(search_res[index]);
     savePlaylist();
     //displayPlaylist();
