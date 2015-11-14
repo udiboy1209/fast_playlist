@@ -8432,4 +8432,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .item-video {
   cursor: pointer; }
 
+li.waves-effect {
+  display: flex; }
+
 /*# sourceMappingURL=main.css.map */

@@ -17,14 +17,28 @@ $(window).load(function() {
     console.log("Document Ready");
     loadPlaylist();
     toggleRepeatMode();
-    displayPlaylist();
+
+    for(var i=0; i<playlist.length; i++){
+        var vidrow=getVidRow(playlist[i]);
+        var id=playlist[i].id.videoId;
+        $(vidrow).addClass("item-video waves-effect");
+        $(vidrow).find("#title").attr("onclick","playSong('"+id+"')");
+        $(vidrow).find("#action").attr("onclick","removeFromPlaylist('"+id+"')");
+        $(vidrow).find("#action i").html("clear");
+        vidrow.appendTo("#playlist");
+
+        if(i==playing){
+            $(vidrow).addClass("playing");
+        }
+    }
 });
 
 
-function getVidRow(snippet){
+function getVidRow(data){
     var vidrow=template.clone()
-    $(vidrow).find("#title").html(snippet.title);
-    $(vidrow).find("#img").attr("src",snippet.thumbnails.default.url);
+    $(vidrow).find("#title").html(data.snippet.title);
+    $(vidrow).find("#img").attr("src",data.snippet.thumbnails.default.url);
+    $(vidrow).attr("id",data.id.videoId);
     return vidrow;
 }
 
@@ -45,7 +59,7 @@ function searchVid(params){
 function displaySearchResults(){
     $("#search_res").empty()
     for(var i=0; i<search_res.length; i++){
-        var vidrow=getVidRow(search_res[i].snippet);
+        var vidrow=getVidRow(search_res[i]);
         $(vidrow).addClass("item-search");
         $(vidrow).find("#action").attr("onclick","addToPlaylist("+i+")");
         $(vidrow).find("#action i").html("add");
@@ -53,42 +67,67 @@ function displaySearchResults(){
     }
 }
 
-function displayPlaylist(){
-    $("#playlist").empty()
+function displayPlaying(){
+    //$("#playlist").empty()
     for(var i=0; i<playlist.length; i++){
-        var vidrow=getVidRow(playlist[i].snippet);
-        $(vidrow).addClass("item-video");
-        $(vidrow).attr("onclick","playSong("+i+")");
-        $(vidrow).find("#action").attr("onclick","removeFromPlaylist("+i+")");
-        $(vidrow).find("#action i").html("clear");
-
         if(i==playing){
-            $(vidrow).addClass("playing");
+            $("#playlist").children().eq(i).addClass("playing");
+        } else {
+            $("#playlist").children().eq(i).removeClass("playing");
         }
-
-        vidrow.appendTo("#playlist");
     }
 }
 
 function addToPlaylist(index){
     playlist.push(search_res[index]);
     savePlaylist();
-    displayPlaylist();
+    //displayPlaylist();
+    
+    var id=search_res[index].id.videoId;
+    var vidrow=getVidRow(search_res[index]);
+    $(vidrow).addClass("waves-effect item-video");
+    $(vidrow).attr("onclick","playSong('"+id+"')");
+    $(vidrow).find("#action").attr("onclick","removeFromPlaylist('"+id+"')");
+    $(vidrow).find("#action i").html("clear");
+    $(vidrow).appendTo("#playlist");
+
     if(playing<0)
         playNext();
 }
 
-function removeFromPlaylist(index){
+function removeFromPlaylist(id){
+    var index=0;
+    for(var i=0; i<playlist.length; i++){
+        if(id==playlist[i].id.videoId)
+            break;
+        index++;
+    }
+    console.log("remove: "+index);
+
     playlist.splice(index,1);
     savePlaylist();
-    displayPlaylist();
+    //displayPlaylist();
+
+    $("#playlist #"+id).remove();
+
     if(playing>index) playing--;
-    if(playing==index) playSong();
+    else if(playing==index) playSong();
 }
 
-function playSong(index){
-    if(index != undefined)
+function playSong(id){
+    if(playing>=0 && playing<playlist.length && id==playlist[playing].id.videoId)
+        return;
+
+    if(id != undefined){
+        var index=0;
+        for(var i=0; i<playlist.length; i++){
+            if(id==playlist[i].id.videoId)
+                break;
+            index++;
+        }
+        console.log("play: "+index);
         playing=index;
+    }
 
     player.stopVideo();
 
@@ -97,25 +136,29 @@ function playSong(index){
         document.title=playlist[playing].snippet.title;
     }
 
-    displayPlaylist();
+    displayPlaying();
 }
 
 function playNext(){
-    playing++;
-    if(playing>=playlist.length)
-        if(repeat_all)
-            playing=0;
-        else
-            playing=-1;
+    if(!repeat_one){
+        playing++;
+        if(playing>=playlist.length)
+            if(repeat_all)
+                playing=0;
+            else
+                playing=-1;
+    }
 
     playSong();
 }
 
 function playPrev(){
-    if(playing>-1)
-        playing--;
-    else
-        playing=playlist.length-1;
+    if(!repeat_one){
+        if(playing>-1)
+            playing--;
+        else
+            playing=playlist.length-1;
+    }
 
     playSong();
 }
