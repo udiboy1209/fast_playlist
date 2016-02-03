@@ -8,7 +8,7 @@ var repeat_one=false;
 
 var template=$('<li class="collection-item avatar valign-wrapper">'+
             '    <img id="img" src="https://i.ytimg.com/vi/1y6smkh6c-0/default.jpg"/>'+
-                '<span id="title" class="title valign flow-text">Title</span>'+
+                '<span id="title" class="title valign flow-text truncate">Title</span>'+
                 '<button id="action" class="btn-floating red waves-effect waves-light secondary-content valign">'+
                 '    <i class="material-icons">add</i>'+
                 '</button>'+
@@ -66,7 +66,7 @@ function getSuggestions(vidId){
             part:'snippet',
             type:'video',
             videoEmbeddable:'true',
-            maxResults:2
+            maxResults:3
         }).execute(function(response){
             suggestions=response.items;
             displaySuggestions();
