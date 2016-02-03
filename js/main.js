@@ -1,4 +1,5 @@
 var search_res=[];
+var suggestions=[];
 var playlist=[];
 var playing=-1;
 
@@ -58,14 +59,40 @@ function searchVid(params){
     }
 }
 
+function getSuggestions(vidId){
+    if(vidId.length>0){
+        YouTube.search.list({
+            relatedToVideoId:vidId,
+            part:'snippet',
+            type:'video',
+            videoEmbeddable:'true',
+            maxResults:2
+        }).execute(function(response){
+            suggestions=response.items;
+            displaySuggestions();
+        });
+    }
+}
+
 function displaySearchResults(){
     $("#search_res").empty()
     for(var i=0; i<search_res.length; i++){
         var vidrow=getVidRow(search_res[i]);
         $(vidrow).addClass("item-search");
-        $(vidrow).find("#action").attr("onclick","addToPlaylist("+i+")");
+        $(vidrow).find("#action").attr("onclick","addToPlaylist("+i+",'search')");
         $(vidrow).find("#action i").html("add");
         vidrow.appendTo("#search_res");
+    }
+}
+
+function displaySuggestions(){
+    $("#suggestions").empty()
+    for(var i=0; i<suggestions.length; i++){
+        var vidrow=getVidRow(suggestions[i]);
+        $(vidrow).addClass("item-search");
+        $(vidrow).find("#action").attr("onclick","addToPlaylist("+i+",'suggestion')");
+        $(vidrow).find("#action i").html("add");
+        vidrow.appendTo("#suggestions");
     }
 }
 
@@ -80,10 +107,16 @@ function displayPlaying(){
     }
 }
 
-function addToPlaylist(index){
+function addToPlaylist(index, from){
+    var viddata;
+    if(from == 'search')
+        viddata = search_res[index];
+    else if(from == 'suggestion')
+        viddata = suggestions[index];
+
     var j=0;
     for(var i=0; i<playlist.length; i++){
-        if(search_res[index].id.videoId==playlist[i].id.videoId)
+        if(viddata.id.videoId==playlist[i].id.videoId)
             break;
         j++;
     }
@@ -92,12 +125,12 @@ function addToPlaylist(index){
         return;
     }
 
-    playlist.push(search_res[index]);
+    playlist.push(viddata);
     savePlaylist();
     //displayPlaylist();
     
-    var id=search_res[index].id.videoId;
-    var vidrow=getVidRow(search_res[index]);
+    var id=viddata.id.videoId;
+    var vidrow=getVidRow(viddata);
     $(vidrow).addClass("waves-effect item-video");
     $(vidrow).attr("onclick","playSong('"+id+"')");
     $(vidrow).find("#action").attr("onclick","removeFromPlaylist(event,'"+id+"')");
@@ -160,6 +193,7 @@ function playSong(id){
     }
 
     displayPlaying();
+    getSuggestions(playlist[playing].id.videoId);
 }
 
 function playNext(){
