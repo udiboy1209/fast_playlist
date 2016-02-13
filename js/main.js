@@ -40,6 +40,7 @@ function getVidRow(data){
     $(vidrow).find("#title").html(data.snippet.title);
     $(vidrow).find("#img").attr("src",data.snippet.thumbnails.default.url);
     $(vidrow).attr("id",data.id.videoId);
+    $(vidrow).attr('title',data.snippet.title);
     $(vidrow).css("opacity","0");
     $(vidrow).animate({"opacity":"1"},{always:function(){$(this).removeAttr("style")}});
     return vidrow;
@@ -139,6 +140,8 @@ function addToPlaylist(index, from){
 
     if(playing<0)
         playNext();
+
+    getSuggestions(id);
 }
 
 function removeFromPlaylist(event,id){
