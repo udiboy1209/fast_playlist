@@ -6,6 +6,8 @@ var playing=-1;
 var repeat_all=false;
 var repeat_one=false;
 
+var share_link_display=false;
+
 var template=$('<li class="collection-item avatar valign-wrapper">'+
             '    <img id="img" src="https://i.ytimg.com/vi/1y6smkh6c-0/default.jpg"/>'+
                 '<span id="title" class="title valign flow-text truncate">Title</span>'+
@@ -14,25 +16,26 @@ var template=$('<li class="collection-item avatar valign-wrapper">'+
                 '</button>'+
             '</li>');
 
-$(window).load(function() {
+function loadWindow(){
     console.log("Document Ready");
-    loadPlaylist();
-    toggleRepeatMode();
+    loadPlaylist(function(){
+        toggleRepeatMode();
 
-    for(var i=0; i<playlist.length; i++){
-        var vidrow=getVidRow(playlist[i]);
-        var id=playlist[i].id.videoId;
-        $(vidrow).addClass("item-video waves-effect");
-        $(vidrow).attr("onclick","playSong('"+id+"')");
-        $(vidrow).find("#action").attr("onclick","removeFromPlaylist(event,'"+id+"')");
-        $(vidrow).find("#action i").html("clear");
-        vidrow.appendTo("#playlist");
+        for(var i=0; i<playlist.length; i++){
+            var vidrow=getVidRow(playlist[i]);
+            var id=playlist[i].id.videoId;
+            $(vidrow).addClass("item-video waves-effect");
+            $(vidrow).attr("onclick","playSong('"+id+"')");
+            $(vidrow).find("#action").attr("onclick","removeFromPlaylist(event,'"+id+"')");
+            $(vidrow).find("#action i").html("clear");
+            vidrow.appendTo("#playlist");
 
-        if(i==playing){
-            $(vidrow).addClass("playing");
+            if(i==playing){
+                $(vidrow).addClass("playing");
+            }
         }
-    }
-});
+    });
+}
 
 
 function getVidRow(data){
@@ -142,6 +145,7 @@ function addToPlaylist(index, from){
         playNext();
 
     getSuggestions(id);
+    updateShareLink();
 }
 
 function removeFromPlaylist(event,id){
@@ -171,6 +175,7 @@ function removeFromPlaylist(event,id){
     else if(playing==index) playSong();
 
     event.stopPropagation();
+    updateShareLink();
 }
 
 function playSong(id){
@@ -252,16 +257,58 @@ function savePlaylist() {
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
 }
 
-function loadPlaylist() {
+function loadPlaylist(done) {
     console.log("load playlist");
-    if(JSON.parse(localStorage.getItem('new_playlist_saved'))) {
-        playlist = JSON.parse(localStorage.getItem('playlist'));
-        var rptst = localStorage.getItem('repeat');
-        if(rptst=='one')
-            repeat_one=true;
-        else if(rptst=='all')
-            repeat_all=true;
+    if($.query.playlist!=undefined){
+        YouTube.videos.list({
+            id:$.query.playlist,
+            part:'snippet'
+        }).execute(function(response){
+            response.items.forEach(function(r){
+                playlist.push({'id':{'videoId':r.id},'snippet':r.snippet});
+            });
+            
+            console.log('fetched playlist');
+            updateShareLink();
+            done();
+            savePlaylist();
+        });
+    } else {
+        if(JSON.parse(localStorage.getItem('new_playlist_saved'))) {
+            playlist = JSON.parse(localStorage.getItem('playlist'));
+            var rptst = localStorage.getItem('repeat');
+            if(rptst=='one')
+                repeat_one=true;
+            else if(rptst=='all')
+                repeat_all=true;
 
-        console.log("loaded playlist");
+            console.log("loaded playlist");
+            updateShareLink();
+            done();
+        }
     }
+}
+
+function updateShareLink(){
+    base_url = window.location.origin + window.location.pathname;
+    ids = [];
+
+    playlist.forEach(function(vid){
+        ids.push(vid.id.videoId);
+    });
+    id_str = ids.join();
+
+    $("#share_link").attr("value",base_url+"?playlist="+id_str);
+}
+
+function toggleShareLink(){
+    if(share_link_display){
+        $("#share_link_box").animate({'opacity':'0'},{duration:300,easing:'linear'});
+        $("#share_link_box div").slideUp(400);
+    } else {
+        $("#share_link_box div").removeAttr("style");
+        $("#share_link_box").animate({'opacity':'1'},{duration:300,easing:'linear'});
+    }
+
+    share_link_display = !share_link_display;
 }

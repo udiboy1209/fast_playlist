@@ -47,34 +47,30 @@
                     <ul class="collection" id="suggestions">
                     </ul>
                     <div class="row card white">
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playPrev()">
+                        <div class="col s2 offset-s1 center waves-effect btn-play-control" onclick="playPrev()">
                             <i class="material-icons small">skip_previous</i>
                         </div>
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playNext()">
+                        <div class="col s2 center waves-effect btn-play-control" onclick="playNext()">
                             <i class="material-icons small">skip_next</i>
                         </div>
-                        <div id="repeat_all" class="col s3 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('all')">
+                        <div id="repeat_all" class="col s2 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('all')">
                             <i class="material-icons small">repeat</i>
                         </div>
-                        <div id="repeat_one" class="col s3 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('one')">
+                        <div id="repeat_one" class="col s2 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('one')">
                             <i class="material-icons small">repeat_one</i>
+                        </div>
+                        <div id="share" class="col s2 center waves-effect btn-play-control" onclick="toggleShareLink()">
+                            <i class="material-icons small">share</i>
+                        </div>
+                    </div>
+                    <div class="row card white" id="share_link_box" style="opacity:0;">
+                        <div class="input-field col s12" style='height:0px'>
+                            <input value="dummy" id="share_link" type="text" readonly onclick="this.select()">
+                            <label class="active" for="share_link">Share Link</label>
                         </div>
                     </div>
                     <ul class="collection" id="playlist">
                     </ul>
-                    <!-- <div class="row card-panel blue lighten-4 valign-wrapper">
-                        <div class="col s4">
-                            <img id="img"/>
-                        </div>
-                        <div class="col s6 valign">
-                            <span class="brown-text text-darken-3">Title</span>
-                        </div>
-                        <div class="col s2 valign">
-                            <button id="action" class="btn-floating red waves-effect waves-light">
-                            <i class="material-icons">add</i>
-                            </button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

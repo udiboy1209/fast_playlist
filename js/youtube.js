@@ -32,5 +32,6 @@ function onGoogleApiClientLoad () {
     gapi.client.load('youtube', 'v3').then(function() {
         console.log("Google API loaded")
         YouTube = gapi.client.youtube;
+        loadWindow();
     });
 }
