@@ -1,6 +1,7 @@
 var API_KEY = 'AIzaSyD67rIKHYPR-GMEs6K9dL6SnwIMlLxoIjM'
 var YouTube;
 var player;
+var playerReady=false;
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
@@ -15,7 +16,13 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-  event.target.playVideo();
+  //event.target.playVideo();
+  console.log("player ready");
+
+  playerReady=true;
+
+  if(playlistReady)
+      playSong();
 }
 
 // 5. The API calls this function when the player's state changes.

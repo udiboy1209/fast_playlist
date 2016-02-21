@@ -1,6 +1,7 @@
 var search_res=[];
 var suggestions=[];
 var playlist=[];
+var playlistReady=false;
 var playing=-1;
 
 var repeat_all=false;
@@ -21,6 +22,12 @@ function loadWindow(){
     loadPlaylist(function(){
         toggleRepeatMode();
 
+        if(window.location.hash!=undefined)
+            playing=parseInt(window.location.hash.substr(1));
+
+        if(playing>=playlist.length)
+            playing=-1;
+
         for(var i=0; i<playlist.length; i++){
             var vidrow=getVidRow(playlist[i]);
             var id=playlist[i].id.videoId;
@@ -34,6 +41,10 @@ function loadWindow(){
                 $(vidrow).addClass("playing");
             }
         }
+
+        playlistReady=true;
+        if(playerReady)
+            playSong();
     });
 }
 
@@ -297,6 +308,8 @@ function updateShareLink(){
         ids.push(vid.id.videoId);
     });
     id_str = ids.join();
+    if(playing>=0)
+        id_str += "#"+playing
 
     $("#share_link").attr("value",base_url+"?playlist="+id_str);
 }
