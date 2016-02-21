@@ -213,6 +213,7 @@ function playSong(id){
 
     displayPlaying();
     getSuggestions(playlist[playing].id.videoId);
+    updateShareLink();
 }
 
 function playNext(){
@@ -309,7 +310,7 @@ function updateShareLink(){
     });
     id_str = ids.join();
     if(playing>=0)
-        id_str += "#"+playing
+        id_str+="#"+playing;
 
     $("#share_link").attr("value",base_url+"?playlist="+id_str);
 }
