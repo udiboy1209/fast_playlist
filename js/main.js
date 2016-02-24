@@ -313,6 +313,9 @@ function updateShareLink(){
         id_str+="#"+playing;
 
     $("#share_link").attr("value",base_url+"?playlist="+id_str);
+
+    if(playing>=0)
+        window.location.hash=playing;
 }
 
 function toggleShareLink(){
