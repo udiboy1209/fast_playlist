@@ -9,9 +9,10 @@ Features
 
  - Search Youtube
  - Playlist saved to cache, loaded next time you open.
- - Works pretty much like a music player (prev, next, loop and repeat_one buttons)
+ - Works pretty much like a music player (Previous, Next, Repeat All, Repeat One buttons)
+ - Share your playlist with a generated share link
 
-Wishlist
+Feature Wishlist
 ---------
  - Drag and Drop!
  - Reordering of playlist
