@@ -22,9 +22,13 @@ function loadWindow(){
     loadPlaylist(function(){
         toggleRepeatMode();
 
-        if(window.location.hash!=undefined)
+        playing=parseInt(localStorage.getItem('playing'));
+
+        if(window.location.hash!="")
             playing=parseInt(window.location.hash.substr(1));
 
+        if(isNaN(playing))
+            playing=-1;
         if(playing>=playlist.length)
             playing=-1;
 
@@ -214,6 +218,7 @@ function playSong(id){
     displayPlaying();
     getSuggestions(playlist[playing].id.videoId);
     updateShareLink();
+    savePlaying();
 }
 
 function playNext(){
@@ -267,6 +272,10 @@ function savePlaylist() {
     localStorage.setItem('repeat', rptst);
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
+}
+
+function savePlaying(){
+    localStorage.setItem('playing', playing);
 }
 
 function loadPlaylist(done) {
