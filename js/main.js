@@ -52,7 +52,6 @@ function loadWindow(){
     });
 }
 
-
 function getVidRow(data){
     var vidrow=template.clone()
     $(vidrow).find("#title").html(data.snippet.title);
@@ -174,7 +173,6 @@ function removeFromPlaylist(event,id){
 
     playlist.splice(index,1);
     savePlaylist();
-    //displayPlaylist();
 
     $("#playlist #"+id).animate({'opacity':'0'},{duration:300,easing:'linear'});
     $("#playlist #"+id).slideUp(
@@ -184,6 +182,7 @@ function removeFromPlaylist(event,id){
         },
         always:function(){
             this.remove()
+            displayPlaying();
         }});
 
     if(playing>index) playing--;
