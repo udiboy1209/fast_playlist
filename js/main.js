@@ -259,16 +259,13 @@ function toggleRepeatMode(mode){
     if(!repeat_all) $("#repeat_all").addClass("disabled");
 
     if(!repeat_one) $("#repeat_one").addClass("disabled");
+
+    localStorage.setItem('repeat', mode);
 }
 
 function savePlaylist() {
     localStorage.setItem('playlist', JSON.stringify(playlist));
 
-    var rptst = 'none';
-    if(repeat_one) rptst='one';
-    else if(repeat_all) rptst='all';
-
-    localStorage.setItem('repeat', rptst);
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
 }
