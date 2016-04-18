@@ -8444,4 +8444,8 @@ li.waves-effect {
   .collection .collection-item.avatar .title {
     font-size: 0.9em; }
 
+#suggestions {
+  overflow-y: auto;
+  max-height: 250px; }
+
 /*# sourceMappingURL=main.css.map */

@@ -69,7 +69,8 @@ function searchVid(params){
             q:params,
             part:'snippet',
             type:'video',
-            videoEmbeddable:'true'
+            videoEmbeddable:'true',
+            maxResults:7
         }).execute(function(response){
             search_res=response.items;
             displaySearchResults();
@@ -84,7 +85,7 @@ function getSuggestions(vidId){
             part:'snippet',
             type:'video',
             videoEmbeddable:'true',
-            maxResults:3
+            maxResults:7
         }).execute(function(response){
             suggestions=response.items;
             displaySuggestions();
