@@ -246,6 +246,8 @@ function playPrev(){
 }
 
 function toggleRepeatMode(mode){
+    console.log('toggle repeat')
+
     if(mode=='all'){
         repeat_all = !repeat_all;
         if(repeat_all) repeat_one = false;
@@ -261,12 +263,11 @@ function toggleRepeatMode(mode){
 
     if(!repeat_one) $("#repeat_one").addClass("disabled");
 
-    localStorage.setItem('repeat', mode);
+    if(mode != undefined)
+        localStorage.setItem('repeat', mode);
 }
 
 function savePlaylist() {
-    localStorage.setItem('playlist', JSON.stringify(playlist));
-
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
 }
@@ -295,6 +296,7 @@ function loadPlaylist(done) {
         if(JSON.parse(localStorage.getItem('new_playlist_saved'))) {
             playlist = JSON.parse(localStorage.getItem('playlist'));
             var rptst = localStorage.getItem('repeat');
+
             if(rptst=='one')
                 repeat_one=true;
             else if(rptst=='all')
