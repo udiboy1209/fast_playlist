@@ -2,4 +2,4 @@
 *.css.map
 *.css
 
-_logs/
+*.log
