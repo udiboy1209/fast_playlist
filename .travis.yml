@@ -7,8 +7,9 @@ rvm:
 
 install: gem install sass
 
-script: scss _scss/main.scss:css/main.css
-script: ./deploy
+script:
+  - scss _scss/main.scss:css/main.css
+  - ./deploy
 
 env:
   global:
