@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+- 2.1
+
+# Assume bundler is being used, therefore
+# the `install` step will run `bundle install` by default.
+
+install: gem install sass
+
+script: scss _scss/main.scss:css/main.css
+script: ./deploy
+
+env:
+  global:
+    - GH_REF: github.com/udiboy1209/fast_playlist
+    - secure: "lJ1HiOqqAf6Khw7mgPpjKJrwegiYDhlGZGtaCNYmNXspaK++sM1PMzAidE1YoOGEylPANgLJTUUTCgACqANDXJj8bnNQJnIOiTXcLMecq+ibdU08Tne+UBKUDzJqIvUBxw8UODTKITNo9vZpnwMT6e2aALEoYidMnXc+9R7Er7KrrovsHPuV3s71bcg7jMu14GVCZOFUgueH42LRXUrq7he6eKZwTIr0QYtjqiIr6oWkMTvvZyVWt45VvewsEwgbDs9FYcUpA64oVrdWTB7SU3COyGvbHZ6i3gDlepmlADTecXwYEk8CvcVwTZaycqU8fZt87nRnBzIY7W0mWg5HFK3bBEDcoK4gZUR/NzV36vsTtNPvf7WoiZaB1oRyI9ShDJec6VpSC19xXco5ZkzA77RXCAPtuG/v+Jca/hb9qKP3xY65NgeNlmCmTL5nenwR0rENntFHumZGY0zRSV1RTLsgQ62FUrAaOJ0s2PoxqBrciqQRqUWd5XxjOuq03GpsnFnDQulzwXDvtGqQHEyeHnUP3LgL6gULyNp1c2szAuVzmVHU0VqLnERcc8nHfb+/aV/IcqPsd5wdMGCTvep0CskWow8nRpngz6eFq5UNjxYxZisvR8ImoWJqElr5D7uDpxktBxwzdKe/bDgYZNzFEvbsn5TlpYhDyq1AJUqfhHM="
+
+sudo: false
