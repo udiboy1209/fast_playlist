@@ -8448,4 +8448,11 @@ li.waves-effect {
   overflow-y: auto;
   max-height: 250px; }
 
+.dropdown-content li {
+  text-align: center; }
+
+.dropdown-button i {
+  font-size: 2rem;
+  line-height: 1; }
+
 /*# sourceMappingURL=main.css.map */

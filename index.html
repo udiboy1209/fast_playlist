@@ -48,19 +48,22 @@
                     <ul class="collection" id="suggestions">
                     </ul>
                     <div class="row card white">
-                        <div class="col s2 offset-s1 center waves-effect btn-play-control" onclick="playPrev()">
+                        <div class="col s3 center waves-effect btn-play-control" onclick="playPrev()">
                             <i class="material-icons small" title="Previous">skip_previous</i>
                         </div>
-                        <div class="col s2 center waves-effect btn-play-control" onclick="playNext()">
+                        <div class="col s3 center waves-effect btn-play-control" onclick="playNext()">
                             <i class="material-icons small" title="Next">skip_next</i>
                         </div>
-                        <div id="repeat_all" class="col s2 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('all')">
-                            <i class="material-icons small" title="Repeat All Songs">repeat</i>
+                        <div class="col s3 center dropdown-button btn-flat" data-activates="play_mode">
+                            <i id="play_selected" class="material-icons small" title="Dropdown to choose">trending_flat</i>
+                            <ul id="play_mode" class="dropdown-content">
+                                <li onclick="toggleRepeatMode('none')"><i class="material-icons small" title="Play all once">trending_flat</i></li>
+                                <li onclick="toggleRepeatMode('all')"><i class="material-icons small" title="Repeat All Songs">repeat</i></li>
+                                <li onclick="toggleRepeatMode('one')"><i class="material-icons small" title="Repeat One Song">repeat_one</i></li>
+                                <li onclick="toggleRepeatMode('shuffle')"><i class="material-icons small" title="Shuffle">shuffle</i></li>
+                            </ul>
                         </div>
-                        <div id="repeat_one" class="col s2 center waves-effect btn-play-control disabled" onclick="toggleRepeatMode('one')">
-                            <i class="material-icons small" title="Repeat One Song">repeat_one</i>
-                        </div>
-                        <div id="share" class="col s2 center waves-effect btn-play-control" onclick="toggleShareLink()">
+                        <div id="share" class="col s3 center waves-effect btn-play-control" onclick="toggleShareLink()">
                             <i class="material-icons small" title="View Share Link">share</i>
                         </div>
                     </div>

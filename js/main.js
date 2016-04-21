@@ -6,6 +6,7 @@ var playing=-1;
 
 var repeat_all=false;
 var repeat_one=false;
+var shuffle=false;
 
 var share_link_display=false;
 
@@ -248,23 +249,30 @@ function playPrev(){
 function toggleRepeatMode(mode){
     console.log('toggle repeat')
 
-    if(mode=='all'){
-        repeat_all = !repeat_all;
-        if(repeat_all) repeat_one = false;
-    } else if (mode=='one'){
-        repeat_one = !repeat_one;
-        if(repeat_one) repeat_all = false;
+    if (mode != undefined) {
+        repeat_all = false;
+        repeat_one = false;
+        shuffle = false;
+
+        if (mode == 'all'){
+            repeat_all = true;
+        } else if (mode == 'one'){
+            repeat_one = true;
+        } else if (mode == 'shuffle'){
+            shuffle = true;
+        }
+
+        localStorage.setItem('repeat', mode);
     }
 
-    $("#repeat_all").removeClass("disabled");
-    $("#repeat_one").removeClass("disabled");
-
-    if(!repeat_all) $("#repeat_all").addClass("disabled");
-
-    if(!repeat_one) $("#repeat_one").addClass("disabled");
-
-    if(mode != undefined)
-        localStorage.setItem('repeat', mode);
+    if(repeat_all) 
+        $("#play_selected").html('repeat');
+    else if(repeat_one) 
+        $("#play_selected").html('repeat_one');
+    else if(shuffle) 
+        $("#play_selected").html('shuffle');
+    else 
+        $("#play_selected").html('trending_flat');
 }
 
 function savePlaylist() {
@@ -301,6 +309,8 @@ function loadPlaylist(done) {
                 repeat_one=true;
             else if(rptst=='all')
                 repeat_all=true;
+            else if(rptst=='shuffle')
+                shuffle=true;
 
             console.log("loaded playlist");
             updateShareLink();
