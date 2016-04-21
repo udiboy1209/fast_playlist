@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function check(){
+    if [ "$(pkill -c -f SimpleHTTPServer)" != "0" -a "$(pkill -c -f scss)" != "0" ]
+    then
+        echo "Server and Scss processes found"
+        return 0
+    else
+        echo "Server and Scss not running"
+        return 1
+    fi
+}
+
+if [ -n "$1" ] 
+then
+    if [ $1 == 'start' ]
+    then
+        if ! check
+        then
+            python -m SimpleHTTPServer 8080 &> _logs/server.log &
+            scss --watch _scss/main.scss:css/main.css &> _logs/scss.log & 
+
+            echo "Server started at http://localhost:8080"
+        fi
+    elif [ $1 == 'stop' ]
+    then
+        if check
+        then
+            pkill -e -f SimpleHTTPServer
+            pkill -e -f scss
+            echo "Server and Scss stopped"
+        fi
+    elif [ $1 == 'check' ]
+    then
+        check
+    else
+        echo "Invalid command."
+        echo "Usage ./server <command>"
+        echo
+        echo "Commands available: start|stop"
+    fi
+else
+    echo "Usage ./server <command>"
+    echo
+    echo "Commands available: start|stop"
+fi

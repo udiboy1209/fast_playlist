@@ -1,3 +1,5 @@
-_scss/
 .sass-cache/
 *.css.map
+*.css
+
+_logs/

@@ -1,0 +1,64 @@
+@import "materialize";
+
+.btn-play-control {
+	@extend .blue-grey-text, .text-darken-3;
+
+	&.disabled {
+		@extend .text-lighten-4;
+	}
+}
+
+.item-video, .item-search {
+	@extend .blue, .lighten-4;
+	padding-left: 25px !important;
+
+	.title {
+		margin-left:10px;
+		margin-right:3rem;
+	}
+}
+
+.item-video {
+	cursor:pointer;
+
+	&.playing {
+		@extend .darken-2, .blue-grey-text, .text-lighten-4;
+	}
+
+}
+
+li.waves-effect{
+	display: flex;
+}
+
+.collection {
+	@extend .blue, .lighten-4;
+	overflow-y: hidden;
+
+	border: 0px;
+    
+    .collection-item.avatar{
+        img {
+            width: auto;
+            height: 60px;
+        }
+
+        .title {
+            font-size: 0.9em;
+        }
+    }
+}
+
+#suggestions {
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.dropdown-content li {
+    text-align: center;
+}
+
+.dropdown-button i {
+    font-size: 2rem;
+    line-height: 1;
+}
