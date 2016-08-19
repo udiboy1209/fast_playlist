@@ -1,19 +1,12 @@
 language: ruby
 rvm:
 - 2.1
-
-# Assume bundler is being used, therefore
-# the `install` step will run `bundle install` by default.
-
 install: gem install sass
-
 script:
-  - scss _scss/main.scss:css/main.css
-  - ./deploy
-
+- scss _scss/main.scss:css/main.css
+- "./deploy"
 env:
   global:
-    - GH_REF: github.com/udiboy1209/fast_playlist
-    - secure: "lJ1HiOqqAf6Khw7mgPpjKJrwegiYDhlGZGtaCNYmNXspaK++sM1PMzAidE1YoOGEylPANgLJTUUTCgACqANDXJj8bnNQJnIOiTXcLMecq+ibdU08Tne+UBKUDzJqIvUBxw8UODTKITNo9vZpnwMT6e2aALEoYidMnXc+9R7Er7KrrovsHPuV3s71bcg7jMu14GVCZOFUgueH42LRXUrq7he6eKZwTIr0QYtjqiIr6oWkMTvvZyVWt45VvewsEwgbDs9FYcUpA64oVrdWTB7SU3COyGvbHZ6i3gDlepmlADTecXwYEk8CvcVwTZaycqU8fZt87nRnBzIY7W0mWg5HFK3bBEDcoK4gZUR/NzV36vsTtNPvf7WoiZaB1oRyI9ShDJec6VpSC19xXco5ZkzA77RXCAPtuG/v+Jca/hb9qKP3xY65NgeNlmCmTL5nenwR0rENntFHumZGY0zRSV1RTLsgQ62FUrAaOJ0s2PoxqBrciqQRqUWd5XxjOuq03GpsnFnDQulzwXDvtGqQHEyeHnUP3LgL6gULyNp1c2szAuVzmVHU0VqLnERcc8nHfb+/aV/IcqPsd5wdMGCTvep0CskWow8nRpngz6eFq5UNjxYxZisvR8ImoWJqElr5D7uDpxktBxwzdKe/bDgYZNzFEvbsn5TlpYhDyq1AJUqfhHM="
-
+  - GH_REF: github.com/udiboy1209/fast_playlist
+  - secure: M6lXFO6hewInQzJNSBztOphmxDBnH74tzKlsq+vrdeindyw1wGBCoCFhLvEPcoX0kHjcQaWCBH67XDGFEPOp7/uroAEVNcYVUNZZetZkY//Oo6y756Jo/HxK5zfMO4HZSkX5soAFARrKe4J1qj3Gb/rFpXSAJnTjAS4zBylp3cE0PPpjGVrd4tv3z571pUeVbBD1S0NxX/0/4rMX122+9fDtOzQ7zLM5pnIdGw91+F/oeasLcLwYAwl/k+YaXw3MOufH+Toguq4eSDHI1sWTMMYk+qgHj/vIeNR4r2rAuR4F+PHJA8cvan+JnyEqj1QFXHqlLQ8iOt26b9Mmy1MBZ2G/Z8gad7scGNLDiBz27q7R1CJGvojhSUGMtAJPPyZ67Mr2/Ypp89w5UR+WY8hsNe/GtMu3f9H1eIhnPzDL5aAilbzJ/0bfSTDV5b014QX4COh6uCQ4O+lf8t2HeZVtIBRkLLv3I/CEA6lQzDa6VIEw+KmqKrGk0bz/oHY/0LqrTf6X927MnUziP7deCf2b0Hqm0sZlqm5TqchbQeeTR4ztl5bpf5bCMsg6C0G/llI2VV8qxNHRdYcymNVTgr8ty1y7SZC+bhsV1Ske2o87NuoFNuvMpH7AkkEgUrZc5SJHFCt1Ga0tTFck2/II21BD2Gl+3sT0ZJgBYLh7iw7DqUU=
 sudo: false
