@@ -287,11 +287,8 @@ function savePlaying(){
 function loadPlaylist(done) {
     console.log("load playlist");
     if($.query.playlist!=undefined){
-        playlist_str = pako.inflate(atob($.query.playlist))
-        playlist_str = String.fromCharCode.apply(null,pako.inflate(new Uint8Array(atob(unescape($.query.playlist)).split("").map(function(c) {
-    return c.charCodeAt(0); }))))
         YouTube.videos.list({
-            id:playlist_str,
+            id:$.query.playlist,
             part:'snippet'
         }).execute(function(response){
             response.items.forEach(function(r){
@@ -330,9 +327,6 @@ function updateShareLink(){
         ids.push(vid.id.videoId);
     });
     id_str = ids.join();
-    console.log(id_str)
-    id_str = escape(btoa(String.fromCharCode.apply(null, pako.deflate(id_str,{level: 5}))))
-    console.log(id_str)
     if(playing>=0)
         id_str+="#"+playing;
 
