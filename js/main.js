@@ -8,18 +8,24 @@ var repeat_all=false;
 var repeat_one=false;
 var shuffle=false;
 
-var share_link_display=false;
+var dragged_pos=null;
+var dragged_playing=false;
 
 var template=$('<li class="collection-item avatar valign-wrapper">'+
-            '    <img id="img" src="https://i.ytimg.com/vi/1y6smkh6c-0/default.jpg"/>'+
+            '    <img id="img"/>'+
                 '<span id="title" class="title valign flow-text truncate">Title</span>'+
-                '<button id="action" class="btn-floating red waves-effect waves-light secondary-content valign">'+
+                '<a id="action" class="secondary-content valign" title="Remove">'+
                 '    <i class="material-icons">add</i>'+
                 '</button>'+
             '</li>');
 
+var searchTrigger = null;
+
 function loadWindow(){
     console.log("Document Ready");
+
+    $("#search").keyup(triggerSearch);
+
     loadPlaylist(function(){
         toggleRepeatMode();
 
@@ -50,6 +56,47 @@ function loadWindow(){
         playlistReady=true;
         if(playerReady)
             playSong();
+
+        dragula([document.getElementById("playlist")])
+            .on("drop",function(el, target, source, sibling){
+                var dropped_pos = -1;
+                var playing_id = playlist[playing].id.videoId;
+                var dragged_data = playlist[dragged_pos];
+                if(sibling == null){
+                    dropped_pos = playlist.length - 1;
+                } else {
+                    for(var i=0; i<playlist.length; i++){
+                        if(playlist[i].id.videoId == sibling.id){
+                            if(dragged_pos < i)
+                                dropped_pos = i-1;
+                            else 
+                                dropped_pos = i;
+                            break;
+                        }
+                    }
+                }
+                playlist.splice(dragged_pos, 1);
+                playlist.splice(dropped_pos, 0, dragged_data);
+
+                for(var i=0; i<playlist.length; i++){
+                    if(playlist[i].id.videoId == playing_id){
+                        playing = i;
+                        break;
+                    }
+                }
+                dragged_pos = null;
+
+                savePlaylist();
+            }).on("drag",function(el, source){
+                for(var i=0; i<playlist.length; i++){
+                    if(playlist[i].id.videoId == el.id){
+                        dragged_pos = i;
+                        break;
+                    }
+                }
+            });
+
+        setupShareCopy();
     });
 }
 
@@ -64,6 +111,13 @@ function getVidRow(data){
     return vidrow;
 }
 
+function triggerSearch(){
+    if(searchTrigger != null)
+        clearTimeout(searchTrigger);
+
+    searchTrigger = setTimeout(function(){searchVid($("#search").val())}, 500);
+}
+
 function searchVid(params){
     if(params.length>0){
         YouTube.search.list({
@@ -75,6 +129,7 @@ function searchVid(params){
         }).execute(function(response){
             search_res=response.items;
             displaySearchResults();
+            searchTrigger = null;
         });
     }
 }
@@ -99,8 +154,8 @@ function displaySearchResults(){
     for(var i=0; i<search_res.length; i++){
         var vidrow=getVidRow(search_res[i]);
         $(vidrow).addClass("item-search");
-        $(vidrow).find("#action").attr("onclick","addToPlaylist("+i+",'search')");
-        $(vidrow).find("#action i").html("add");
+        $(vidrow).attr("onclick","addToPlaylist("+i+",'search')");
+        $(vidrow).find("#action").css({'display':'none'});
         vidrow.appendTo("#search_res");
     }
 }
@@ -161,7 +216,6 @@ function addToPlaylist(index, from){
         playNext();
 
     getSuggestions(id);
-    updateShareLink();
 }
 
 function removeFromPlaylist(event,id){
@@ -191,7 +245,6 @@ function removeFromPlaylist(event,id){
     else if(playing==index) playSong();
 
     event.stopPropagation();
-    updateShareLink();
 }
 
 function playSong(id){
@@ -218,7 +271,6 @@ function playSong(id){
 
     displayPlaying();
     getSuggestions(playlist[playing].id.videoId);
-    updateShareLink();
     savePlaying();
 }
 
@@ -275,6 +327,9 @@ function toggleRepeatMode(mode){
         $("#play_selected").html('trending_flat');
 }
 
+function reorderPlaylist(el, target, source, sibling){
+}
+
 function savePlaylist() {
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
@@ -296,7 +351,6 @@ function loadPlaylist(done) {
             });
             
             console.log('fetched playlist');
-            updateShareLink();
             done();
             savePlaylist();
         });
@@ -313,13 +367,12 @@ function loadPlaylist(done) {
                 shuffle=true;
 
             console.log("loaded playlist");
-            updateShareLink();
             done();
         }
     }
 }
 
-function updateShareLink(){
+function getShareLink(element){
     base_url = window.location.origin + window.location.pathname;
     ids = [];
 
@@ -330,20 +383,18 @@ function updateShareLink(){
     if(playing>=0)
         id_str+="#"+playing;
 
-    $("#share_link").attr("value",base_url+"?playlist="+id_str);
-
     if(playing>=0)
         window.location.hash=playing;
+
+    return base_url+"?playlist="+id_str
 }
 
-function toggleShareLink(){
-    if(share_link_display){
-        $("#share_link_box").animate({'opacity':'0'},{duration:300,easing:'linear'});
-        $("#share_link_box div").slideUp(400);
-    } else {
-        $("#share_link_box div").removeAttr("style");
-        $("#share_link_box").animate({'opacity':'1'},{duration:300,easing:'linear'});
-    }
-
-    share_link_display = !share_link_display;
+function setupShareCopy(){
+    new Clipboard('#share',{
+        text: getShareLink,
+    }).on('success', function(e){
+        Materialize.toast('Share link was copied!', 1000);
+    }).on('error', function(e){
+        Materialize.toast('Failed to copy share link!', 1000);
+    });
 }

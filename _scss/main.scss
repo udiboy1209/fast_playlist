@@ -1,5 +1,34 @@
 @import "materialize";
 
+@mixin placeholder-style {
+    color: #fff;
+    opacity: 1;
+}
+
+::-webkit-input-placeholder{ 
+    @include placeholder-style;
+}
+
+:-moz-placeholder{ 
+    @include placeholder-style;
+}
+
+::-moz-placeholder{ 
+    @include placeholder-style;
+}
+
+:-ms-input-placeholder { 
+    @include placeholder-style;
+}
+
+hr {
+    height: 1px;
+    border: 0px;
+    border-top: 1px solid map-get($blue-grey, lighten-2);
+}
+
+
+
 .btn-play-control {
 	@extend .blue-grey-text, .text-darken-3;
 
@@ -9,10 +38,10 @@
 }
 
 .item-video, .item-search {
-	@extend .blue, .lighten-4;
 	padding-left: 25px !important;
 
 	.title {
+        @extend .black-text;
 		margin-left:10px;
 		margin-right:3rem;
 	}
@@ -22,9 +51,33 @@
 	cursor:pointer;
 
 	&.playing {
-		@extend .darken-2, .blue-grey-text, .text-lighten-4;
-	}
+		@extend .blue, .darken-2;
 
+        .title {
+            @extend .blue-grey-text, .text-lighten-4;
+        }
+	}
+}
+
+.item-search {
+    i.material-icons {
+        line-height: inherit;
+    }
+}
+
+#playlist-column {
+    hr {
+        margin: 10px;
+    }
+
+    .row {
+        margin-bottom: 0px;
+    }
+
+    h5 {
+        font-size: 24px;
+        margin-left: 30px;
+    }
 }
 
 li.waves-effect{
@@ -32,8 +85,8 @@ li.waves-effect{
 }
 
 .collection {
-	@extend .blue, .lighten-4;
-	overflow-y: hidden;
+	overflow-y: auto;
+    height: 350px;
 
 	border: 0px;
     
@@ -46,12 +99,38 @@ li.waves-effect{
         .title {
             font-size: 0.9em;
         }
+
+        .secondary-content {
+            top: 5px;
+            right: 5px;
+
+            color: #ddd;
+
+            &:hover {
+                color: #aaa;
+            }
+
+            i {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
 }
 
-#suggestions {
-    overflow-y: auto;
-    max-height: 250px;
+.collection-item.gu-mirror {
+    img {
+        width: auto;
+        height: 60px;
+    }
+
+    .title {
+        font-size: 0.9em;
+    }
+
+    .secondary-content {
+        display: none;
+    }
 }
 
 .dropdown-content li {
@@ -61,4 +140,30 @@ li.waves-effect{
 .dropdown-button i {
     font-size: 2rem;
     line-height: 1;
+}
+
+.container {
+    margin-left: 4%;
+    margin-right: 4%;
+    width: 92%;
+}
+
+nav {
+    .brand-logo {
+        font-size: 24px;
+        margin-left: 20px;
+        font-weight: bold;
+    }
+
+    #search-form {
+        width: 40%;
+        margin-left: 30%;
+        background-color: map-get($red, accent-1);
+    }
+}
+
+#share_link {
+    visibility: hidden;
+    height: 0px;
+    margin: 0px;
 }

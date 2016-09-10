@@ -6,11 +6,8 @@
         <!--Import materialize.css-->
         <!-- <link type="text/css" rel="stylesheet" href="css/materialize.css"/>-->
         <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="dragula/dragula.min.css"/>
 
-
-        <script type="text/javascript" src="js/youtube.js"></script>
-        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,33 +18,32 @@
         <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper red">
-                    <a class="brand-logo center" href="./">Youtube Fast Playlist</a>
+                    <a class="brand-logo" href="./">Youtube Fast Playlist</a>
+                    <form id="search-form">
+                        <div class="input-field dropdown-button" data-beloworigin="true" data-activates="search_res">
+                            <input id="search" type="search" autocomplete="off" placeholder="Search Youtube"></input>
+                            <label for="search"><i class="material-icons">search</i></label>
+                            <ul class="collection dropdown-content" id="search_res">
+                            </ul>
+                        </div>
+                    </form>
                 </div>
             </nav>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col s6">
+                <div class="col s8">
                     <div class="row">
                         <div class="col s12 center"><div id="player"></div></div>
                     </div>
-                    <div class="row">
-                        <div class="col s10 offset-s1 card white">
-                            <div class="input-field">
-                                <i onclick="searchVid($('#search').val())" class="material-icons prefix" style="cursor: pointer">search</i>
-                                <input id="search" type="search" style="padding-left: 2rem; width: calc(90% - 2.5rem)"></input>
-                                <label for="search">Search Youtube</label>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="collection" id="search_res">
-                    </ul>
                 </div>
 
-                <div class="col s5">
-                    <ul class="collection" id="suggestions">
-                    </ul>
-                    <div class="row card white">
+                <div class="col s4 card white" id="playlist-column">
+                    <div class="row">
+                        <h5>Playlist</h5>
+                        <hr>
+                    </div>
+                    <div class="row">
                         <div class="col s3 center waves-effect btn-play-control" onclick="playPrev()">
                             <i class="material-icons small" title="Previous">skip_previous</i>
                         </div>
@@ -63,22 +59,24 @@
                                 <li onclick="toggleRepeatMode('shuffle')"><i class="material-icons small" title="Shuffle">shuffle</i></li>
                             </ul>
                         </div>
-                        <div id="share" class="col s3 center waves-effect btn-play-control" onclick="toggleShareLink()">
-                            <i class="material-icons small" title="View Share Link">share</i>
+                        <div id="share" class="col s3 center waves-effect btn-play-control">
+                            <i class="material-icons small" title="Copy Share Link">share</i>
                         </div>
                     </div>
-                    <div class="row card white" id="share_link_box" style="opacity:0;">
-                        <div class="input-field col s12" style='height:0px'>
-                            <input value="dummy" id="share_link" type="text" readonly onclick="this.select()">
-                            <label class="active" for="share_link">Share Link</label>
-                        </div>
+                    <div class="row">
+                        <hr>
+                        <ul class="collection" id="playlist">
+                        </ul>
                     </div>
-                    <ul class="collection" id="playlist">
-                    </ul>
                 </div>
             </div>
         </div>
 
+        <input value="dummy" id="share_link" type="text" readonly/>
+        <script type="text/javascript" src="js/youtube.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/clipboard.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
         <script>
             // 2. This code loads the IFrame Player API code asynchronously.
@@ -106,5 +104,6 @@
             ga('send', 'pageview');
 
         </script>
+        <script src="dragula/dragula.min.js"></script>
     </body>
 </html>
