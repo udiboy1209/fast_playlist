@@ -3,9 +3,26 @@ set -e # exit with nonzero exit code if anything fails
 
 # clear and re-create the out directory
 rm -rf out || exit 0;
-mkdir out;
 
+if [ "$TRAVIS_BRANCH" != "release" ]
+then
+    git fetch origin release:release
+fi
+git checkout release
+
+scss _scss/main.scss:css/main.css
+mkdir out
 cp -r js/ css/ font/ index.html favicon.png out/
+
+if [ "$TRAVIS_BRANCH" != "master" ]
+then
+    git fetch origin master:master
+fi
+git checkout master
+
+scss _scss/main.scss:css/main.css
+mkdir out/beta
+cp -r js/ css/ font/ index.html favicon.png out/beta
 
 # go to the out directory and create a *new* Git repo
 cd out

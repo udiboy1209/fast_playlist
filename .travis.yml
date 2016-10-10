@@ -3,7 +3,6 @@ rvm:
 - 2.1
 install: gem install sass
 script:
-- scss _scss/main.scss:css/main.css
 - "./deploy"
 env:
   global:
