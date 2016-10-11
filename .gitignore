@@ -1,5 +1,5 @@
 .sass-cache/
-*.css.map
-*.css
+main.css.map
+main.css
 
 *.log
