@@ -156,9 +156,14 @@ nav {
     }
 
     #search-form {
-        width: 40%;
+        width:  40%;
+        height: 100%;
         margin-left: 30%;
         background-color: map-get($red, accent-1);
+
+        .input-field {
+            height: 100%;
+        }
     }
 }
 
