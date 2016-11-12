@@ -21,10 +21,16 @@ var template=$('<li class="collection-item avatar valign-wrapper">'+
 
 var searchTrigger = null;
 
+var playlistDomTop = null;
+var scrollDirection = "none";
+var scrollTrigger = null;
+
 function loadWindow(){
     console.log("Document Ready");
 
     $("#search").keyup(triggerSearch);
+    playlistDomTop = $("#playlist").offset()['top'];
+    playlistDomBot = playlistDomTop + $("#playlist").height();
 
     loadPlaylist(function(){
         toggleRepeatMode();
@@ -94,10 +100,44 @@ function loadWindow(){
                         break;
                     }
                 }
+            }).on("out",function(el,container,source){
+                var posTop = $(".gu-mirror").offset()['top'];
+                var posBot = $(".gu-mirror").height() + posTop;
+
+                if(posTop < playlistDomTop) scrollDirection = "up";
+                if(posBot > playlistDomBot) scrollDirection = "down";
+
+                triggerScroll();
+            }).on("over", function(el,container,source){
+                scrollDirection = "none";
             });
 
         setupShareCopy();
     });
+}
+
+function triggerScroll(){
+    if(scrollTrigger != null)
+        clearTimeout(scrollTrigger);
+
+    scrollPlaylist();
+}
+
+function scrollPlaylist(){
+    if(scrollDirection == "none"){
+        scrollTrigger = null;
+    } else {
+        var p = $("#playlist");
+        var curr = p.scrollTop();
+
+        if(scrollDirection == "up")
+            curr -= 10;
+        if(scrollDirection == "down")
+            curr += 10;
+        p.scrollTop(curr);
+
+        scrollTrigger = setTimeout(scrollPlaylist, 30);
+    }
 }
 
 function getVidRow(data){
