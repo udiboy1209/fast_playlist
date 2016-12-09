@@ -28,7 +28,8 @@ var scrollTrigger = null;
 function loadWindow(){
     console.log("Document Ready");
 
-    $("#search").keyup(triggerSearch);
+    $("#search").on("keyup keypress", triggerSearch);
+
     playlistDomTop = $("#playlist").offset()['top'];
     playlistDomBot = playlistDomTop + $("#playlist").height();
 
@@ -151,7 +152,13 @@ function getVidRow(data){
     return vidrow;
 }
 
-function triggerSearch(){
+function triggerSearch(e){
+    var key = e.keyCode || e.which;
+    if(key === 13){ // Enter pressed
+        e.preventDefault();
+        return false;
+    }
+
     if(searchTrigger != null)
         clearTimeout(searchTrigger);
 
