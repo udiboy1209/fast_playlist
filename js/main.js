@@ -259,8 +259,10 @@ function addToPlaylist(index, from){
     $(vidrow).find("#action i").html("clear");
     $(vidrow).appendTo("#playlist");
 
-    if(playing<0)
+    if(playing<0){
+        playing = playlist.length-2;
         playNext();
+    }
 
     getSuggestions(id);
 }
