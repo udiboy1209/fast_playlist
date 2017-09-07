@@ -4,8 +4,8 @@ Fast Playlist
 It is a web-app which helps you create playlist for youtube songs really quickly.
 I made it out of the pure frustration of the lack of this feature on Youtube.
 
-Check out the [stable version](https://udiboy.github.io/fast_playlist).
-You can also try out the [beta version](https://udiboy.github.io/fast_playlist/beta).
+Check out the [stable version](https://udiboy1209.github.io/fast_playlist).
+You can also try out the [beta version](https://udiboy1209.github.io/fast_playlist/beta).
 
 Features
 ---------
