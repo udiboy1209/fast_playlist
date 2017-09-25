@@ -307,8 +307,7 @@ function playSong(id){
                 break;
             index++;
         }
-        console.log("play: "+index);
-        playing=index;
+        console.log("play: "+index); playing=index;
     }
 
     player.stopVideo();
@@ -446,4 +445,15 @@ function setupShareCopy(){
     }).on('error', function(e){
         Materialize.toast('Failed to copy share link!', 1000);
     });
+}
+
+function clearAll(){
+    console.log("remove all");
+
+    player.stopVideo();
+    var id;
+    for(var i=0; i<playlist.length; i++){
+        id=playlist[i].id.videoId;
+        $("#playlist #"+id).remove();
+    }
 }
