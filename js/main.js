@@ -236,6 +236,8 @@ function addToPlaylist(index, from){
     else if(from == 'suggestion')
         viddata = suggestions[index];
 
+    console.log(viddata);
+
     var j=0;
     for(var i=0; i<playlist.length; i++){
         if(viddata.id.videoId==playlist[i].id.videoId)
@@ -307,7 +309,8 @@ function playSong(id){
                 break;
             index++;
         }
-        console.log("play: "+index); playing=index;
+        console.log("play: "+index);
+        playing=index;
     }
 
     player.stopVideo();
@@ -456,4 +459,5 @@ function clearAll(){
         id=playlist[i].id.videoId;
         $("#playlist #"+id).remove();
     }
+    playlist = [];
 }
