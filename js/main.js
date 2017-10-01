@@ -236,6 +236,8 @@ function addToPlaylist(index, from){
     else if(from == 'suggestion')
         viddata = suggestions[index];
 
+    console.log(viddata);
+
     var j=0;
     for(var i=0; i<playlist.length; i++){
         if(viddata.id.videoId==playlist[i].id.videoId)
@@ -446,4 +448,16 @@ function setupShareCopy(){
     }).on('error', function(e){
         Materialize.toast('Failed to copy share link!', 1000);
     });
+}
+
+function clearAll(){
+    console.log("remove all");
+
+    player.stopVideo();
+    var id;
+    for(var i=0; i<playlist.length; i++){
+        id=playlist[i].id.videoId;
+        $("#playlist #"+id).remove();
+    }
+    playlist = [];
 }
