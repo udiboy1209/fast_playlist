@@ -4,6 +4,8 @@ var playlist=[];
 var playlistReady=false;
 var playing=-1;
 
+var total_duration = 0;
+
 var repeat_all=false;
 var repeat_one=false;
 var shuffle=false;
@@ -165,6 +167,38 @@ function triggerSearch(e){
     searchTrigger = setTimeout(function(){searchVid($("#search").val())}, 500);
 }
 
+function getContentDuration(id, sign = 1){
+    YouTube.videos.list({
+        id:id,
+        part:'contentDetails',
+    }).execute(function(response){
+        if(response.items.length){
+            duration=response.items[0].contentDetails.duration;
+            updateTotalDuration(duration, sign);
+        }
+    });
+}
+
+function updateTotalDuration(duration, sign){
+    var array=duration.match(/(\d+)(?=[MHS])/ig)||[];
+
+    var formatted=array.map(function(item){
+            if(item.length<2) return '0'+item;
+                return item;
+    });
+    var multiplier = 1;
+    for(var i = formatted.length-1;i>=0;i--){
+        total_duration = total_duration + sign*formatted[i]*multiplier;
+        multiplier *= 60;
+    }
+
+    var date = new Date(null);
+    date.setSeconds(total_duration);
+    var result = date.toISOString().substr(11, 8);
+
+    $("#totalDuration").html(result);
+}
+
 function searchVid(params){
     if(params.length>0){
         YouTube.search.list({
@@ -236,6 +270,9 @@ function addToPlaylist(index, from){
     else if(from == 'suggestion')
         viddata = suggestions[index];
 
+    // fetch length of video and add to playtime
+    getContentDuration(viddata.id.videoId);
+
     var j=0;
     for(var i=0; i<playlist.length; i++){
         if(viddata.id.videoId==playlist[i].id.videoId)
@@ -275,6 +312,7 @@ function removeFromPlaylist(event,id){
         index++;
     }
     console.log("remove: "+index);
+    getContentDuration(id, -1);
 
     playlist.splice(index,1);
     savePlaylist();
@@ -382,6 +420,7 @@ function reorderPlaylist(el, target, source, sibling){
 function savePlaylist() {
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
+    localStorage.setItem('total_duration', total_duration);
 }
 
 function savePlaying(){
@@ -407,6 +446,10 @@ function loadPlaylist(done) {
         if(JSON.parse(localStorage.getItem('new_playlist_saved'))) {
             playlist = JSON.parse(localStorage.getItem('playlist'));
             var rptst = localStorage.getItem('repeat');
+
+            var saved_duration = localStorage.getItem('total_duration');
+            if(saved_duration)
+                updateTotalDuration(saved_duration);
 
             if(rptst=='one')
                 repeat_one=true;
