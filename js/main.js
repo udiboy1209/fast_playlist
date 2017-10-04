@@ -357,7 +357,8 @@ function playSong(id){
     }
 
     displayPlaying();
-    getSuggestions(playlist[playing].id.videoId);
+    if(typeof playlist[playing]!='undefined')
+        getSuggestions(playlist[playing].id.videoId);
     savePlaying();
 }
 
