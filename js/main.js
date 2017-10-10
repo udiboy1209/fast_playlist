@@ -174,12 +174,12 @@ function getContentDuration(id, sign = 1){
     }).execute(function(response){
         if(response.items.length){
             duration=response.items[0].contentDetails.duration;
-            updateTotalDuration(duration, sign);
+            parseDuration(duration, sign);
         }
     });
 }
 
-function updateTotalDuration(duration, sign){
+function parseDuration(duration, sign){
     var array=duration.match(/(\d+)(?=[MHS])/ig)||[];
 
     var formatted=array.map(function(item){
@@ -188,10 +188,15 @@ function updateTotalDuration(duration, sign){
     });
     var multiplier = 1;
     for(var i = formatted.length-1;i>=0;i--){
-        total_duration = total_duration + sign*formatted[i]*multiplier;
+        total_duration = total_duration + sign*parseInt(formatted[i])*multiplier;
         multiplier *= 60;
     }
 
+    updateDurationOnDisplay();
+    saveDuration();
+}
+
+function updateDurationOnDisplay() {
     var date = new Date(null);
     date.setSeconds(total_duration);
     var result = date.toISOString().substr(11, 8);
@@ -421,7 +426,10 @@ function reorderPlaylist(el, target, source, sibling){
 function savePlaylist() {
     localStorage.setItem('playlist', JSON.stringify(playlist));
     localStorage.setItem('new_playlist_saved', JSON.stringify(true));
-    localStorage.setItem('total_duration', total_duration);
+}
+
+function saveDuration() {
+    localStorage.setItem('total_duration', JSON.stringify(total_duration));
 }
 
 function savePlaying(){
@@ -448,9 +456,8 @@ function loadPlaylist(done) {
             playlist = JSON.parse(localStorage.getItem('playlist'));
             var rptst = localStorage.getItem('repeat');
 
-            var saved_duration = localStorage.getItem('total_duration');
-            if(saved_duration)
-                updateTotalDuration(saved_duration);
+            total_duration = JSON.parse(localStorage.getItem('total_duration'));
+            updateDurationOnDisplay();
 
             if(rptst=='one')
                 repeat_one=true;
