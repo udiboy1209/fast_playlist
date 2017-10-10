@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e # exit with nonzero exit code if anything fails
 
+if [ "$TRAVIS_PULL_REQUEST" != "false" ]
+then
+    echo "Pull Request, no need to deploy"
+    exit 0
+fi
+
 # clear and re-create the out directory
 rm -rf out || exit 0;
 
