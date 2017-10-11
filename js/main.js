@@ -78,7 +78,7 @@ function loadWindow(){
                         if(playlist[i].id.videoId == sibling.id){
                             if(dragged_pos < i)
                                 dropped_pos = i-1;
-                            else 
+                            else
                                 dropped_pos = i;
                             break;
                         }
@@ -180,6 +180,9 @@ function getContentDuration(id, sign = 1){
 }
 
 function parseDuration(duration, sign){
+    // Fix a backward compatibility bug which leads to negative time
+    if(sign < 0 && total_duration == 0) return;
+
     var array=duration.match(/(\d+)(?=[MHS])/ig)||[];
 
     var formatted=array.map(function(item){
@@ -292,7 +295,7 @@ function addToPlaylist(index, from){
     playlist.push(viddata);
     savePlaylist();
     //displayPlaylist();
-    
+
     var id=viddata.id.videoId;
     var vidrow=getVidRow(viddata);
     $(vidrow).addClass("waves-effect item-video");
@@ -410,13 +413,13 @@ function toggleRepeatMode(mode){
         localStorage.setItem('repeat', mode);
     }
 
-    if(repeat_all) 
+    if(repeat_all)
         $("#play_selected").html('repeat');
-    else if(repeat_one) 
+    else if(repeat_one)
         $("#play_selected").html('repeat_one');
-    else if(shuffle) 
+    else if(shuffle)
         $("#play_selected").html('shuffle');
-    else 
+    else
         $("#play_selected").html('trending_flat');
 }
 
@@ -446,7 +449,7 @@ function loadPlaylist(done) {
             response.items.forEach(function(r){
                 playlist.push({'id':{'videoId':r.id},'snippet':r.snippet});
             });
-            
+
             console.log('fetched playlist');
             done();
             savePlaylist();
