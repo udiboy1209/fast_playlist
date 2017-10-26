@@ -51,13 +51,13 @@
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playPrev()">
+                        <div class="col offset-s1 s2 center waves-effect btn-play-control" onclick="playPrev()">
                             <i class="material-icons small" title="Previous">skip_previous</i>
                         </div>
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playNext()">
+                        <div class="col s2 center waves-effect btn-play-control" onclick="playNext()">
                             <i class="material-icons small" title="Next">skip_next</i>
                         </div>
-                        <div class="col s3 center dropdown-button btn-flat" data-activates="play_mode">
+                        <div class="col s2 center dropdown-button btn-flat" data-activates="play_mode">
                             <i id="play_selected" class="material-icons small" title="Dropdown to choose">trending_flat</i>
                             <ul id="play_mode" class="dropdown-content">
                                 <li onclick="toggleRepeatMode('none')"><i class="material-icons small" title="Play all once">trending_flat</i></li>
@@ -66,8 +66,11 @@
                                 <li onclick="toggleRepeatMode('shuffle')"><i class="material-icons small" title="Shuffle">shuffle</i></li>
                             </ul>
                         </div>
-                        <div id="share" class="col s3 center waves-effect btn-play-control">
+                        <div id="share" class="col s2 center waves-effect btn-play-control">
                             <i class="material-icons small" title="Copy Share Link">share</i>
+                        </div>
+                        <div class="col s2 center waves-effect btn-play-control" onclick="clearAll()">
+                            <i class="material-icons small" title="Clear All">clear</i>
                         </div>
                     </div>
                     <div class="row">
