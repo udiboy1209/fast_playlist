@@ -1,44 +1,77 @@
-var API_KEY = 'AIzaSyD67rIKHYPR-GMEs6K9dL6SnwIMlLxoIjM'
-var YouTube;
-var player;
-var playerReady=false;
+define('ytIframeAPI',['jquery'], function($) {
+    var player = {
 
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '500',
-    width: '800',
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
+        playerStateChangeListeners: [],
+        playerReadyListeners: [],
+
+        registerStateChangeListener: function(listener) {
+            player.playerStateChangeListeners.push(listener);
+        },
+
+        registerReadyListener: function(listener) {
+            player.playerReadyListeners.push(listener);
+            if(player.playerReady)
+                listener();
+        },
+    };
+
+    var loadPlayer = function() {
+        player.player = new YT.Player('player', {
+            height: '500',
+            width: '800',
+            events: {
+                'onReady': function(event) {
+                    console.log("player ready");
+                    player.playerReady=true;
+                    for(listener in player.playerReadyListeners){
+                        player.playerReadyListeners[listener](event);
+                    }
+                },
+                'onStateChange': function(event) {
+                    for(listener in player.playerStateChangeListeners){
+                        player.playerStateChangeListeners[listener](event);
+                    }
+                }
+            }
+        });
+    };
+
+    if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
+        window.onYouTubeIframeAPIReady = function() {
+            loadPlayer();
+        };
+        $.getScript('//www.youtube.com/iframe_api');
+    } else {
+        loadPlayer();
     }
-  });
-}
 
-// 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-  //event.target.playVideo();
-  console.log("player ready");
+    return player;
+});
 
-  playerReady=true;
+define('ytDataAPI',['jquery'],
+function($) {
+    var API_KEY = 'AIzaSyD67rIKHYPR-GMEs6K9dL6SnwIMlLxoIjM';
+    var ytdata = {
+        api: null,
+        ready: false
+    }
 
-  if(playlistReady)
-      playSong();
-}
+    var loadGClient = function() {
+        gapi.client.setApiKey(API_KEY);
+        gapi.client.load('youtube', 'v3', function() {
+            ytdata.api = gapi.client.youtube;
+            ytdata.ready = true;
+        });
+    }
 
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.ENDED) {
-    playNext();
-  }
-}
+    if(typeof(gapi) == 'undefined') {
+        window.onGoogleApiClientLoad = function() {
+            loadGClient();
+        }
+        $.getScript('//apis.google.com/js/client.js?onload=onGoogleApiClientLoad');
+    } else {
+        loadGClient();
+    }
 
-function onGoogleApiClientLoad () {
-    gapi.client.setApiKey(API_KEY);
-    gapi.client.load('youtube', 'v3').then(function() {
-        console.log("Google API loaded")
-        YouTube = gapi.client.youtube;
-        loadWindow();
-    });
-}
+    return ytdata;
+});
