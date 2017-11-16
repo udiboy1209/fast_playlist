@@ -50,6 +50,7 @@ define('ytIframeAPI',['jquery'], function($) {
 
 define('ytDataAPI',['jquery'],
 function($) {
+    console.log('Load data API');
     var API_KEY = 'AIzaSyD67rIKHYPR-GMEs6K9dL6SnwIMlLxoIjM';
     var ytdata = {
         api: null,

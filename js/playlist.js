@@ -37,15 +37,6 @@ function(ytData,ytIframe,template,$) {
             }
         }
 
-        // Load current playing number
-        playing=parseInt(localStorage.getItem('playing'));
-        if(window.location.hash!="")
-            playing=parseInt(window.location.hash.substr(1));
-        if(isNaN(playing))
-            playing=-1;
-        if(playing>=playlist.length)
-            playing=-1;
-
         // Display all playlist songs
         for(var i=0; i<playlist.length; i++){
             var vidrow=template.getVidRow(playlist[i]);

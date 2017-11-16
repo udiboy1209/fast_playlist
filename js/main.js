@@ -1,10 +1,14 @@
 requirejs.config({
-    baseUrl: 'js-require',
+    baseUrl: 'js',
+    paths: {
+        'jquery': 'lib/jquery',
+        'hammerjs': 'lib/hammerjs'
+    },
     bundles: {
         'youtube': ['ytDataAPI', 'ytIframeAPI'],
     },
     shim: {
-        'materialize': {
+        'lib/materialize': {
             exports: ['Materialize','Velocity'],
             deps: ['jquery','hammerjs']
         }
@@ -13,12 +17,14 @@ requirejs.config({
 
 console.log('Booting up');
 
-require(['jquery','velocity'], function(jquery){
+// Pre-load requirements
+require(['jquery','lib/velocity'], function(jquery){
     window.jQuery = window.$ = require('jquery');
 });
 
-require(['search', 'player', 'playlist', 'jquery', 'dragula', 'clipboard', 'materialize'],
-function(search, player, playlist, $, dragula, Clipboard, Materialize) {
+require(['search', 'player', 'playlist',
+         'jquery', 'lib/dragula', 'lib/clipboard', 'lib/materialize'],
+function(search, player, playlist, $, dragula, Clipboard) {
     console.log("Document Ready");
     var dragged_pos = null;
     var scrollDirection = "none";

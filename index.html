@@ -51,19 +51,19 @@
                         <hr>
                     </div>
                     <div class="row">
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playlist.playPrev()">
+                        <div id="play_prev" class="col s3 center waves-effect btn-play-control" >
                             <i class="material-icons small" title="Previous">skip_previous</i>
                         </div>
-                        <div class="col s3 center waves-effect btn-play-control" onclick="playlist.playNext()">
+                        <div id="play_next" class="col s3 center waves-effect btn-play-control" >
                             <i class="material-icons small" title="Next">skip_next</i>
                         </div>
                         <div class="col s3 center dropdown-button btn-flat" data-activates="play_mode">
                             <i id="play_selected" class="material-icons small" title="Dropdown to choose">trending_flat</i>
                             <ul id="play_mode" class="dropdown-content">
-                                <li onclick="playlist.toggleRepeatMode('none')"><i class="material-icons small" title="Play all once">trending_flat</i></li>
-                                <li onclick="playlist.toggleRepeatMode('all')"><i class="material-icons small" title="Repeat All Songs">repeat</i></li>
-                                <li onclick="playlist.toggleRepeatMode('one')"><i class="material-icons small" title="Repeat One Song">repeat_one</i></li>
-                                <li onclick="playlist.toggleRepeatMode('shuffle')"><i class="material-icons small" title="Shuffle">shuffle</i></li>
+                                <li id="repeat_none"><i class="material-icons small" title="Play all once">trending_flat</i></li>
+                                <li id="repeat_all"><i class="material-icons small" title="Repeat All Songs">repeat</i></li>
+                                <li id="repeat_one"><i class="material-icons small" title="Repeat One Song">repeat_one</i></li>
+                                <li id="repeat_shuffle"><i class="material-icons small" title="Shuffle">shuffle</i></li>
                             </ul>
                         </div>
                         <div id="share" class="col s3 center waves-effect btn-play-control">
@@ -80,7 +80,7 @@
         </div>
 
         <input value="dummy" id="share_link" type="text" readonly/>
-        <script data-main="js-require/main" src="js-require/require.js"></script>
+        <script data-main="js/main" src="js/lib/require.js"></script>
         <!-- <script> -->
         <!--     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ -->
         <!--     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), -->

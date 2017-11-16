@@ -5,6 +5,36 @@ function($, playlist, ytIframe){
     var repeat_one = false;
     var shuffle = false;
 
+    var setup = function() {
+        playlist.addListener({songAdded: songAdded, songRemoved: songRemoved});
+        ytIframe.registerReadyListener(function(){playSong()});
+        ytIframe.registerStateChangeListener(function(event) {
+              if(event.data == YT.PlayerState.ENDED) {
+                  playNext();
+              }
+        });
+
+        $('#play_prev').on('click', playPrev);
+        $('#play_next').on('click', playNext);
+        $('#repeat_none').on('click', function(){toggleRepeatMode()});
+        $('#repeat_one').on('click', function(){toggleRepeatMode('one')});
+        $('#repeat_all').on('click', function(){toggleRepeatMode('all')});
+        $('#repeat_shuffle').on('click', function(){toggleRepeatMode('shuffle')});
+
+        // Load current playing number
+        playing=parseInt(localStorage.getItem('playing'));
+        if(window.location.hash!="")
+            playing=parseInt(window.location.hash.substr(1));
+        if(isNaN(playing))
+            playing=-1;
+        if(playing>=playlist.length)
+            playing=-1;
+
+        if(playing >= 0) {
+            displayPlaying();
+        }
+    }
+
     var displayPlaying = function() {
         for(var i=0; i<playlist.size(); i++){
             if(i==playing){
@@ -121,14 +151,7 @@ function($, playlist, ytIframe){
         }
     }
 
-    playlist.addListener({songAdded: songAdded, songRemoved: songRemoved});
-    ytIframe.registerReadyListener(playSong);
-    ytIframe.registerStateChangeListener(function(event) {
-          if(event.data == YT.PlayerState.ENDED) {
-              playNext();
-          }
-    });
-    displayPlaying();
+    setup();
 
     return {
         displayPlaying: displayPlaying,

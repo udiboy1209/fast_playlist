@@ -1,5 +1,6 @@
 define(['ytDataAPI', 'playlist', 'template', 'jquery'],
 function(ytData, playlist, template, $) {
+    console.log(ytData, playlist, template, $);
     var searchTrigger = null;
     var searchRes = null;
 
