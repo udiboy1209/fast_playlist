@@ -165,8 +165,9 @@ nav {
         margin-left: 30%;
         background-color: map-get($red, accent-1);
 
-        .input-field {
+        .input-field label {
             height: 100%;
+            transform: none;
         }
     }
 }
