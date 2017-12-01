@@ -72,31 +72,39 @@ function($, playlist, ytIframe){
         //     getSuggestions(playlist.get(playing).id.videoId);
         savePlaying();
     }
+    
 
-    var playNext = function(){
-        if(!repeat_one){
+    var playNext = function() {
+      if (shuffle) {
+        playing=Math.floor(Math.random()*(playlist.size()+1));
+      }
+      else if (!repeat_one) {
             playing++;
             if(playing>=playlist.size())
                 if(repeat_all)
                     playing=0;
                 else
                     playing=-1;
-        }
+      }
 
-        playSong();
+      playSong();
     }
 
-    var playPrev = function(){
-        if(!repeat_one){
+    var playPrev = function() {
+      if (shuffle) {
+        playing=Math.floor(Math.random()*(playlist.size()+1));
+      }
+      else if(!repeat_one) {
             if(playing>-1)
                 playing--;
             else
                 playing=playlist.size()-1;
-        }
+      }
 
-        playSong();
+      playSong();
     }
-
+    
+    
     var toggleRepeatMode = function(mode){
         console.log('toggle repeat')
 
