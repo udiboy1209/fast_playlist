@@ -187,6 +187,9 @@ function(ytData,ytIframe,template,$) {
         savePlaylist();
     }
 
+
+
+
     setup();
 
     return {
