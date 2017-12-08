@@ -16,7 +16,7 @@ function($, playlist, ytIframe){
 
         $('#play_prev').on('click', playPrev);
         $('#play_next').on('click', playNext);
-        $('#clear_playlist').on('click', clearPlaylist);
+        $('#clear_playlist').on('click', playlist.clearPlaylist);
         $('#repeat_none').on('click', function(){toggleRepeatMode()});
         $('#repeat_one').on('click', function(){toggleRepeatMode('one')});
         $('#repeat_all').on('click', function(){toggleRepeatMode('all')});
@@ -151,25 +151,7 @@ function($, playlist, ytIframe){
             }
         }
     }
-    var clearPlaylist = function(){
-      //clear playlist
-      playlist = [];
-      //clear total duration
-      totalDuration = 0;
-      //removes all the videos
-      $('#playlist li').remove();
-      //save the playlist
-      localStorage.setItem('playlist', JSON.stringify(playlist));
-      localStorage.setItem('new_playlist_saved', JSON.stringify(true));
-      //reset duration
-      localStorage.setItem('total_duration', JSON.stringify(totalDuration));
-      //reload page
-      location.reload();
-      //change title
-      document.title= "Youtube Fast Playlist";
-    }
-
-
+    
     setup();
 
     return {

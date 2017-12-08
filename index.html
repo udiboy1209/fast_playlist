@@ -51,10 +51,10 @@
                         <hr>
                     </div>
                     <div class="row">
-                        <div id="play_prev" class="col s2 center waves-effect btn-play-control" >
+                        <div id="play_prev" class="col s3 center waves-effect btn-play-control" >
                             <i class="material-icons small" title="Previous">skip_previous</i>
                         </div>
-                        <div id="play_next" class="col s2 center waves-effect btn-play-control" >
+                        <div id="play_next" class="col s3 center waves-effect btn-play-control" >
                             <i class="material-icons small" title="Next">skip_next</i>
                         </div>
 
@@ -67,13 +67,17 @@
                                 <li id="repeat_shuffle"><i class="material-icons small" title="Shuffle">shuffle</i></li>
                             </ul>
                         </div>
-                        <div id="share" class="col s3 center waves-effect btn-play-control">
-                            <i class="material-icons small" title="Copy Share Link">share</i>
+                        <div class="col s3 center dropdown-button btn-flat" data-activates="more_options">
+                            <i id="more" class="material-icons small" title="More Options">expand_more</i>
+                            <ul id="more_options" class="dropdown-content">
+                                <li id="share">
+                                    <i class="material-icons small" title="Copy Share Link">share</i>
+                                </li>
+                                <li id="clear_playlist">
+                                    <i id="clear_playlist" class="material-icons small" title="Clear Playlist">clear</i>
+                                </li>
+                            </ul>
                         </div>
-                        <div id="clear_playlist" class="col s2 center waves-effect btn-play-control">
-                            <i class="material-icons small" title="Clear Playlist">clear</i>
-                        </div>
-
                     </div>
                     <div class="row">
                         <hr>
