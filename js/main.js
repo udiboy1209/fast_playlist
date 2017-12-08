@@ -27,8 +27,8 @@ require(['search', 'player', 'playlist',
 function(search, player, playlist, $, dragula, Clipboard) {
     console.log("Document Ready");
     var dragged_pos = null;
-    var scrollDirection = "none";
-    var scrollTrigger = null;
+    const scrollDirection = "none",
+        scrollTrigger = null;
 
     $("#search").on("keyup keypress", search.triggerSearch);
 
