@@ -151,7 +151,7 @@ function($, playlist, ytIframe){
             }
         }
     }
-    
+
     setup();
 
     return {
