@@ -188,18 +188,14 @@ function(ytData,ytIframe,template,$) {
     }
 
     var clearPlaylist = function(){ 
-      playlist = [];
-      total_duration = 0;
-      //removes all the videos
-      $('#playlist li').remove();
-      //reset playlis duration
-      $('#totalDuration').text("00:00:00");
-      //save the playlist
-      savePlaylist();
-      //reset duration
-      saveDuration();
-      //change title
-      document.title= "Youtube Fast Playlist";
+        ytIframe.player.stopVideo();
+        playlist = [];
+        total_duration = 0;
+        $('#playlist li').remove();
+        $('#totalDuration').text("00:00:00");
+        savePlaylist();
+        saveDuration();
+        document.title= "Youtube Fast Playlist";
     }
 
     setup();
