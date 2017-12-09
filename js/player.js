@@ -16,6 +16,7 @@ function($, playlist, ytIframe){
 
         $('#play_prev').on('click', playPrev);
         $('#play_next').on('click', playNext);
+        $('#clear_playlist').on('click', playlist.clearPlaylist);
         $('#repeat_none').on('click', function(){toggleRepeatMode()});
         $('#repeat_one').on('click', function(){toggleRepeatMode('one')});
         $('#repeat_all').on('click', function(){toggleRepeatMode('all')});

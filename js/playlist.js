@@ -187,6 +187,17 @@ function(ytData,ytIframe,template,$) {
         savePlaylist();
     }
 
+    var clearPlaylist = function(){ 
+        ytIframe.player.stopVideo();
+        playlist = [];
+        total_duration = 0;
+        $('#playlist li').remove();
+        $('#totalDuration').text("00:00:00");
+        savePlaylist();
+        saveDuration();
+        document.title= "Youtube Fast Playlist";
+    }
+
     setup();
 
     return {
@@ -197,6 +208,7 @@ function(ytData,ytIframe,template,$) {
         getPlaylistIds: getPlaylistIds,
         addListener: addListener,
         moveSong: moveSong,
+        clearPlaylist: clearPlaylist,
         size: function() {
             return playlist.length;
         },

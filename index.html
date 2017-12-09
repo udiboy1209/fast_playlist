@@ -57,6 +57,7 @@
                         <div id="play_next" class="col s3 center waves-effect btn-play-control" >
                             <i class="material-icons small" title="Next">skip_next</i>
                         </div>
+
                         <div class="col s3 center dropdown-button btn-flat" data-activates="play_mode">
                             <i id="play_selected" class="material-icons small" title="Dropdown to choose">trending_flat</i>
                             <ul id="play_mode" class="dropdown-content">
@@ -66,8 +67,16 @@
                                 <li id="repeat_shuffle"><i class="material-icons small" title="Shuffle">shuffle</i></li>
                             </ul>
                         </div>
-                        <div id="share" class="col s3 center waves-effect btn-play-control">
-                            <i class="material-icons small" title="Copy Share Link">share</i>
+                        <div class="col s3 center dropdown-button btn-flat" data-activates="more_options">
+                            <i id="more" class="material-icons small" title="More Options">more_vert</i>
+                            <ul id="more_options" class="dropdown-content">
+                                <li id="share">
+                                    <i class="material-icons small" title="Copy Share Link">share</i><br>Share
+                                </li>
+                                <li id="clear_playlist">
+                                    <i class="material-icons small" title="Clear Playlist">clear</i><br>Clear All
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="row">
