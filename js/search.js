@@ -4,6 +4,7 @@ function(ytData, playlist, template, $) {
     var searchTrigger = null;
     var searchRes = null;
     var searchPlaylist= null;
+    var template1=$("<li><h6 class='ti'>title</h6></li>");
 
     var triggerSearch = function(e) {
         var key = e.keyCode || e.which;
@@ -49,29 +50,32 @@ function(ytData, playlist, template, $) {
 
     var displaySearchResults = function(){
         $("#search_res").empty();
-        $("#search_res").append("<li><h6 class='ti'>Playlist</h6></li>");
-        if(searchPlaylist===null){
-            $("#search_res").append("<p>Nothing found</p>");
-        }else{
+        if(!$.isEmptyObject(searchPlaylist)){
+            var tirow=template1.clone();
+            $(tirow).find('.ti').html('playlist');
+            tirow.appendTo('#search_res');
             for(song in searchPlaylist){
                 var vidrow=template.getVidRow(searchPlaylist[song]);
                 $(vidrow).addClass("item-search");
                 $(vidrow).on("click",function(){
                     //console.log('clicked '+this.id);
                     var hashId="#playlist > #"+this.id;
+                    var target=$(hashId).offset().top-$("#playlist").offset().top;
                     $("#playlist").animate({
-                            scrollTop : $(hashId).offset().top
+                            scrollTop : target
                         }, 2000);
-                    $(hashId).css({'background-color':'#56BD81'});
+                    $(hashId).addClass('green lighten-2');
                     setTimeout(function(){
-                        $(hashId).css({'background-color':'#fff'});
+                        $(hashId).removeClass('green lighten-2');
                     },3000);
                 });
                 $(vidrow).find("#action").css({'display': 'none'});
                 vidrow.appendTo("#search_res");
             }
         }
-        $("#search_res").append("<li><h6 class='ti'>Youtube</h6></li>");
+        var tirow=template1.clone();
+        $(tirow).find('.ti').html('youtube');
+        tirow.appendTo('#search_res');
         for(result in searchRes){
             var vidrow=template.getVidRow(searchRes[result]);
             $(vidrow).addClass("item-search");
