@@ -164,6 +164,9 @@ function($, playlist, ytIframe){
         setPlaying: setPlaying,
         getCurrent: function() {
             return playlist.get(playing);
+        },
+        getPlaying: function(){
+            return playing;            
         }
     }
 });

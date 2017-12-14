@@ -103,6 +103,8 @@ function(search, player, playlist, $, dragula, Clipboard) {
         });
 
     var getShareLink = function(element){
+        var playing = player.getPlaying();
+
         base_url = window.location.origin + window.location.pathname;
         ids = playlist.getPlaylistIds();
 
