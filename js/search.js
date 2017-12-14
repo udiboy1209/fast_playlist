@@ -25,7 +25,7 @@ function(ytData, playlist, template, $) {
                 var song=playlist.get(si);
                 var title=song.snippet.title;
                 if(title.search(pattern)!==-1){
-                    //console.log(song);
+                    console.log(song);
                     var id=song.id.videoId;
                     searchPlaylist[id]=song;
                 }
@@ -60,7 +60,7 @@ function(ytData, playlist, template, $) {
                 $(vidrow).on("click",function(){
                     //console.log('clicked '+this.id);
                     var hashId="#playlist > #"+this.id;
-                    var target=$(hashId).offset().top-$("#playlist").offset().top;
+                    var target=$(hashId).offset().top-$("#playlist > li:nth-child(1)").offset().top;
                     $("#playlist").animate({
                             scrollTop : target
                         }, 2000);
