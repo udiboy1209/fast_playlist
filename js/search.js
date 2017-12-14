@@ -25,7 +25,7 @@ function(ytData, playlist, template, $) {
                 var song=playlist.get(si);
                 var title=song.snippet.title;
                 if(title.search(pattern)!==-1){
-                    console.log(song);
+                    //console.log(song);
                     var id=song.id.videoId;
                     searchPlaylist[id]=song;
                 }
