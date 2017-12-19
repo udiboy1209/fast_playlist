@@ -4,7 +4,7 @@ Fast Playlist
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://www.gitter.im/fast-playlist)
 [![TravisCI](https://travis-ci.org/udiboy1209/fast_playlist.svg?branch=master)](https://travis-ci.org/udiboy1209/fast_playlist?branch=master)
 
-It is a web-app which helps you create playlist for youtube songs really quickly.
+It is a web-app which helps you create playlist for YouTube songs really quickly.
 I made it out of the pure frustration of the lack of this feature on Youtube.
 
 Check out the [stable version](https://udiboy1209.github.io/fast_playlist).
@@ -49,7 +49,7 @@ And to check if it is running
 
 Feature Wishlist
 ---------
- - Video Suggestions: I had added it before, using youtube's suggestion list.
+ - Video Suggestions: I had added it before, using YouTube's suggestion list.
    The code is there is [some old commits](https://github.com/udiboy1209/fast_playlist/blob/442af81ef7be090f5fde9fe42e265b96e1587347/js/main.js#L82),
    it just needs to be added to the UI in a nice way so that it doesn't clutter the player.
  - Shuffle: The button is there, but need to implement it in a non-hacky way.
