@@ -5,19 +5,19 @@
     opacity: 1;
 }
 
-::-webkit-input-placeholder{ 
+::-webkit-input-placeholder{
     @include placeholder-style;
 }
 
-:-moz-placeholder{ 
+:-moz-placeholder{
     @include placeholder-style;
 }
 
-::-moz-placeholder{ 
+::-moz-placeholder{
     @include placeholder-style;
 }
 
-:-ms-input-placeholder { 
+:-ms-input-placeholder {
     @include placeholder-style;
 }
 
@@ -93,7 +93,7 @@ li.waves-effect{
     height: 350px;
 
 	border: 0px;
-    
+  
     .collection-item.avatar{
         img {
             width: auto;
