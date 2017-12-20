@@ -17,6 +17,7 @@ function($, playlist, ytIframe){
         $('#play_prev').on('click', playPrev);
         $('#play_next').on('click', playNext);
         $('#clear_playlist').on('click', playlist.clearPlaylist);
+        $('#add_playlist').on('click',playlist.addPlaylist);
         $('#repeat_none').on('click', function(){toggleRepeatMode()});
         $('#repeat_one').on('click', function(){toggleRepeatMode('one')});
         $('#repeat_all').on('click', function(){toggleRepeatMode('all')});
@@ -114,7 +115,7 @@ function($, playlist, ytIframe){
                 shuffle=true;
             }
 
-            localStorage.setItem('repeat', mode);
+            playlist.saveRepeat(mode);
         }
 
         if(repeat_all)
