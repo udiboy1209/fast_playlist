@@ -14,7 +14,7 @@ You can also try out the [beta version](https://udiboy1209.github.io/fast_playli
 Features
 ---------
 
- - Search Youtube
+ - Search Youtube and current playlist
  - Playlist saved to cache, loaded next time you open.
  - Works pretty much like a music player (Previous, Next, Repeat All, Repeat One, Shuffle).
  - Easy Drag and Drop re-ordering, and add from search menu by dragging.
@@ -53,12 +53,24 @@ Feature Wishlist
    The code is there is [some old commits](https://github.com/udiboy1209/fast_playlist/blob/442af81ef7be090f5fde9fe42e265b96e1587347/js/main.js#L82),
    it just needs to be added to the UI in a nice way so that it doesn't clutter the player.
  - Shuffle: The button is there, but need to implement it in a non-hacky way.
+   This was attempted in PR #22 , and I have provided a lot of suggestions in comments.
  - Multiple playlists: Currently the running playlist is stored in cache and you can only modify it.
    Something better would be to be able to switch to a new empty playlist and save the current one for later.
+   There was an attempt to implement this in PR #33 . I have given various comments on that PR which are relevant.
  - The share link which is generated right now is horrendously long, especially for large playlists.
    Integration with a URL shortener service would be great.
- - The playlist is stored as an array rn with integer access. 
+ - The playlist is stored as an array right now with integer access.
    Switching to ID based dictionary object would be faster.
+ - Load all videos from a YouTube Playlist into current playlist.
+
+Pipe Dreams
+----------
+
+There has always been a need for making fast\_playlist server-based web app rather than a full
+client-side app. This can allow for storing and loading playlists from the server and also
+multiple people editing the playlist together. Many more features can be made possible with a server-side
+implementation. I had attempted a collaborative editing version at [playlist.moodi.org](http://playlist.moodi.org/)
+but it is no more than a hack. PM me for the source code.
 
 License
 --------
